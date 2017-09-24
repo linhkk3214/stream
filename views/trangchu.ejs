@@ -2,8 +2,8 @@
 <head>
 	<title>Linh dep trai</title>
 	<script src="jquery.js"></script>
-	<script src="./socket.io.js"></script>
-	<script src="./peer.js"></script>
+	<script src="socket.io.js"></script>
+	<script src="peer.js"></script>
 	<script>
 		var socket = io("https://stream6969.herokuapp.com");
 		socket.on("server_send_login_fail", function(data){
@@ -27,6 +27,23 @@
 			$("#SendMess").click(function(){
 				socket.emit("client_send_message", $("#txtMess").val());
 			});
+			$("#btnCall").click(function(){
+				var remoteId = $("#txtRemoteId").val();
+				openStream()
+				.then(stream => {
+					playStream("localStream", stream);
+					const call = peer.call(remoteId, stream);
+					call.on("stream", stream => playStream("remoteStream", stream))
+				});
+			});
+		});
+		peer.on("call", (call) => {
+			openStream()
+			.then(stream => {
+				call.answer(stream);
+				playStream("localStream", stream);
+				playStream.on("stream", (stream) => play("remoteStream", stream));
+			});
 		});
 	</script>
 </head>
@@ -39,6 +56,8 @@
 	<input type="text" id="txtMess"/><button id="SendMess">Gui</button>
 	<video id="localStream" width="300" controls></video>
 	<video id="remoteStream" width="300" controls></video>
+	<h3 id="txtLocalId"></h3>
+	<input type="text" id="remoteId"/><button id="btnCall">Call</button>
 </body>
-<script src="./main.js"></script>
+<script src="main.js"></script>
 </html>
