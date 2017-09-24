@@ -7,10 +7,10 @@ function playStream(IdTagVideo, stream) {
     $video.srcObject = stream;
     $video.play();
 }
-const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
-peer.on("open", () => {
+const peer = new Peer({ "key": "tr3izjcg20jatt9", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
+peer.on("open", (id) => {
     console.log(1);
-    $("#txtLocalIdPeer").html(peer.id);
+    $("#txtLocalIdPeer").html(id);
 });
 $("#btnCall").click(function () {
     var remoteId = $("#txtRemoteId").val();
