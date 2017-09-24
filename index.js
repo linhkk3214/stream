@@ -52,7 +52,7 @@ app.get("/auth/fb/cb", passport.authenticate("facebook", {
     successRedirect: "/success",
 }) );
 
-server.listen(port, () => { console.log("server da hoat dong") });
+server.listen(port, () => { console.log(port); console.log("server da hoat dong") });
 
 passport.use(new passportfb(
     {
