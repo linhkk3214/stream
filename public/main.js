@@ -1,4 +1,23 @@
 var socket = io("https://stream6969.herokuapp.com");
+let customConfig;
+
+$.ajax({
+  url: "https://service.xirsys.com/ice",
+  data: {
+    ident: "vanpho",
+    secret: "2b1c2dfe-4374-11e7-bd72-5a790223a9ce",
+    domain: "vanpho93.github.io",
+    application: "default",
+    room: "default",
+    secure: 1
+  },
+  success: function (data, status) {
+    // data.d is where the iceServers object lives
+    customConfig = data.d;
+    console.log(customConfig);
+  },
+  async: false
+});
 function openStream() {
     const config = { audio: false, video: true };
     return navigator.mediaDevices.getUserMedia(config);
@@ -11,7 +30,8 @@ function playStream(IdTagVideo, stream) {
 //openStream()
 //    .then(stream => playStream("localStream", stream));
 
-const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
+const peer = new Peer({ key: "peerjs", host: "stream6969.herokuapp.com", secure: true, port: 443, config: customConfig  });
+
 peer.on("open", id => {
     console.log(1);
     $("#txtLocalIdPeer").html(id);
