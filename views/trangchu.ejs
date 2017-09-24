@@ -5,21 +5,6 @@
 	<script src="socket.io.js"></script>
 	<script src="peer.js"></script>
 	<script>
-		var socket = io("https://stream6969.herokuapp.com");
-		socket.on("server_send_login_fail", function(data){
-			alert("Dang ky that bai");
-		});
-		socket.on("server_send_login_success", function(data){
-			$("#txtXinChao").html("Xin chao " + data);
-			$("#txtUserName").hide();
-			$("#btnRegister").hide();
-			$("#txtXinChao").show(1000);
-		});
-		socket.on("server_send_message", function(data){
-			$("#content").append("<div>"  + data.username + ": " + data.text + "</div>");
-		});
-	</script>
-	<script>
 		$(document).ready(function (){
 			$("#btnRegister").click(function(){
 				socket.emit("client_send_username", $("#txtUserName").val());
