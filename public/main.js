@@ -1,4 +1,4 @@
-var socket = io("https://stream6969.herokuapp.com");
+const socket = io("https://stream6969.herokuapp.com");
 function openStream() {
     const config = { audio: false, video: true };
     return navigator.mediaDevices.getUserMedia(config);
@@ -8,13 +8,10 @@ function playStream(IdTagVideo, stream) {
     $video.srcObject = stream;
     $video.play();
 }
-//openStream()
-//    .then(stream => playStream("localStream", stream));
-
 const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
-peer.on("open", () => {
+peer.on("open", (id) => {
     console.log(1);
-    //$("#txtLocalIdPeer").html(id);
+    $("#txtLocalIdPeer").html(id);
 });
 $("#btnCall").click(function () {
     var remoteId = $("#txtRemoteId").val();
