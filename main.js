@@ -10,9 +10,10 @@ function playStream(IdTagVideo, stream) {
 //openStream()
 //    .then(stream => playStream("localStream", stream));
 
-const peer = new Peer({ "key": "linhdeptrao" });
+const peer = new Peer({ "key": "linhdeptraovqbd" });
 peer.on("open", id => {
-    $("#txtLocalId").html(id);
+    console.log(1);
+    $("#txtLocalIdPeer").html(id);
 });
 $("#btnCall").click(function () {
     var remoteId = $("#txtRemoteId").val();
