@@ -24,6 +24,7 @@ var io = require("socket.io")(server);
 var arrUser = [];
 
 io.on("connection", function (socket) {
+    console.log("123456789   123456789");
     console.log(socket);
     socket.on("client_send_username", function (data) {
         socket.username = data;
