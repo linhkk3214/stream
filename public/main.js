@@ -8,9 +8,9 @@ function playStream(IdTagVideo, stream) {
     $video.play();
 }
 const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
-peer.on("open", (id) => {
+peer.on("open", () => {
     console.log(1);
-    $("#txtLocalIdPeer").html(id);
+    $("#txtLocalIdPeer").html(peer.id);
 });
 $("#btnCall").click(function () {
     var remoteId = $("#txtRemoteId").val();
