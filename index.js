@@ -23,6 +23,8 @@ var server = require('http').Server(app);
 var io = require("socket.io")(server);
 var arrUser = [];
 
+console.log(port);
+
 io.on("connection", function (socket) {
     console.log("123456789   123456789");
     console.log(socket);
