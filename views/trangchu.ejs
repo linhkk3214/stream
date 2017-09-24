@@ -1,47 +1,46 @@
-const socket = io("https://stream6969.herokuapp.com");
-socket.on("server_send_login_fail", function (data) {
-    alert("Dang ky that bai");
-});
-socket.on("server_send_login_success", function (data) {
-    $("#txtXinChao").html("Xin chao " + data);
-    $("#txtUserName").hide();
-    $("#btnRegister").hide();
-    $("#txtXinChao").show(1000);
-});
-socket.on("server_send_message", function (data) {
-    $("#content").append("<div>" + data.username + ": " + data.text + "</div>");
-});
-function openStream() {
-    const config = { audio: false, video: true };
-    return navigator.mediaDevices.getUserMedia(config);
-}
-function playStream(IdTagVideo, stream) {
-    var $video = document.getElementById(IdTagVideo);
-    $video.srcObject = stream;
-    $video.play();
-}
-//openStream()
-//    .then(stream => playStream("localStream", stream));
-
-const peer = new Peer({ "key": "peer", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
-peer.on("open", id => {
-    console.log(1);
-    $("#txtLocalIdPeer").html(id);
-});
-$("#btnCall").click(function () {
-    var remoteId = $("#txtRemoteId").val();
-    openStream()
-        .then(stream => {
-            playStream("localStream", stream);
-            const call = peer.call(remoteId, stream);
-            call.on("stream", stream => playStream("remoteStream", stream))
-        });
-});
-peer.on("call", (call) => {
-    openStream()
-        .then(stream => {
-            call.answer(stream);
-            playStream("localStream", stream);
-            playStream.on("stream", (stream) => play("remoteStream", stream));
-        });
-});
+<html>
+<head>
+	<title>Linh dep trai</title>
+	<script src="jquery.js"></script>
+	<script src="socket.io.js"></script>
+	<script src="peer.js"></script>
+	<script>
+		var socket = io("https://stream6969.herokuapp.com");
+		socket.on("server_send_login_fail", function(data){
+			alert("Dang ky that bai");
+		});
+		socket.on("server_send_login_success", function(data){
+			$("#txtXinChao").html("Xin chao " + data);
+			$("#txtUserName").hide();
+			$("#btnRegister").hide();
+			$("#txtXinChao").show(1000);
+		});
+		socket.on("server_send_message", function(data){
+			$("#content").append("<div>"  + data.username + ": " + data.text + "</div>");
+		});
+	</script>
+	<script>
+		$(document).ready(function (){
+			$("#btnRegister").click(function(){
+				socket.emit("client_send_username", $("#txtUserName").val());
+			});
+			$("#SendMess").click(function(){
+				socket.emit("client_send_message", $("#txtMess").val());
+			});
+		});
+	</script>
+</head>
+<body>
+	<input type="text" id="txtUserName"/><button type="button" id="btnRegister">Dang ky</button>
+	<a href="/auth/fb" id="btnLoginFb">Login with facebook</a>
+	<label id="txtXinChao" style="display: none"></label>
+	<div id="content">
+	</div>
+	<input type="text" id="txtMess"/><button id="SendMess">Gui</button>
+	<video id="localStream" width="300" controls></video>
+	<video id="remoteStream" width="300" controls></video>
+	<h3 id="txtLocalIdPeer"></h3>
+	<input type="text" id="remoteId"/><button id="btnCall">Call</button>
+</body>
+<script src="main.js"></script>
+</html>
