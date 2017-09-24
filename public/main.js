@@ -10,7 +10,7 @@ function playStream(IdTagVideo, stream) {
 //openStream()
 //    .then(stream => playStream("localStream", stream));
 
-const peer = new Peer({ "key": "linhdeptraovqbd" });
+const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
 peer.on("open", id => {
     console.log(1);
     $("#txtLocalIdPeer").html(id);
