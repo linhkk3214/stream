@@ -1,3 +1,4 @@
+var socket = io("https://stream6969.herokuapp.com");
 function openStream() {
     const config = { audio: false, video: true };
     return navigator.mediaDevices.getUserMedia(config);
@@ -10,7 +11,7 @@ function playStream(IdTagVideo, stream) {
 //openStream()
 //    .then(stream => playStream("localStream", stream));
 
-const peer = new Peer({ "key": "peerjsbb" });
+const peer = new Peer({ "key": "peerjs", "host": "stream6969.herokuapp.com", secure: true, port: 443 });
 peer.on("open", id => {
     console.log(1);
     $("#txtLocalIdPeer").html(id);
