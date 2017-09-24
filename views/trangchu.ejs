@@ -5,7 +5,7 @@
 	<script src="socket.io.js"></script>
 	<script src="peer.js"></script>
 	<script>
-		var socket = io("https://stream6969.herokuapp.com");
+		const socket = io("https://stream6969.herokuapp.com");
 		socket.on("server_send_login_fail", function(data){
 			alert("Dang ky that bai");
 		});
