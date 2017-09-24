@@ -7,5 +7,10 @@ function playStream(IdTagVideo, stream) {
     $video.srcObject = stream;
     $video.play();
 }
-openStream()
-    .then(stream => playStream("localStream", stream));
+//openStream()
+//    .then(stream => playStream("localStream", stream));
+
+const peer = new Peer({ "key": "linhdeptrao" });
+peer.on("open", id => {
+    $("#txtLocalId").html(id);
+});
